@@ -1,0 +1,27 @@
+
+.about {
+  max-width: 44rem;
+  padding: 0 1rem;
+  margin: 3rem auto 6rem;
+}
+
+.about_item h3 {
+  color: #E9E9E9;
+  font-size: 1.3rem;
+  margin: 1rem 0rem 0rem 0rem;
+  display: inline-block;
+}
+
+.about_item p {
+  color: #999;
+  font-size: 1.1rem;
+  margin: 12px 0px;
+}
+.about_item p:nth-of-type(1) {
+  margin-top: 10px;
+}
+
+.about_table {
+  color: #BBB;
+  font-size: 0.9rem;
+}

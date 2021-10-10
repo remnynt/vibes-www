@@ -1,0 +1,42 @@
+
+.mint {
+  max-width: 44rem;
+  padding: 0 1rem;
+  margin: 3rem auto 6rem;
+}
+
+.mint_item h3 {
+  color: #E9E9E9;
+  font-size: 1.3rem;
+  margin: 1rem 0rem 0rem 0rem;
+  display: inline-block;
+}
+
+.mint_item p {
+  color: #999;
+  font-size: 1.1rem;
+  margin: 12px 0px;
+}
+.mint_item p:nth-of-type(1) {
+  margin-top: 10px;
+}
+
+.mint_form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: 15rem;
+}
+
+.render_form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: 19rem;
+}
+
+.iframe {
+  background: #E9E9E9;
+}
