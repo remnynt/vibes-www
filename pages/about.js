@@ -80,6 +80,9 @@ export default function About() {
         <div className={aboutStyles.about_item}>
           <h3>vibes is interoperable</h3>
           <p>
+            inspired by projects like loot and art blocks, vibes aims to combine the collectability of generative art with the freedom and uncapped potential of web3 primitives.
+          </p>
+          <p>
             each vibe exposes its{" "}
             <a href="https://etherscan.io/address/0x6c7c97caff156473f6c9836522ae6e1d6448abe7#code#L1405" target="_blank" rel="noopener noreferrer">
               color palette on chain
@@ -106,7 +109,10 @@ export default function About() {
         </div>
 
         <div className={aboutStyles.about_item}>
-          <h3>vibes is open-source</h3>
+          <h3>vibes is free and open</h3>
+          <p>
+            vibes is dedicated to the public domain. to the extent possible under law, remnynt has waived all copyright and related or neighboring rights to this collection of art.
+          </p>
           <p>
             the code for vibes rendering, the smart contract, and this website is open-source, and released under the mit license.
           </p>
@@ -115,6 +121,16 @@ export default function About() {
           </p>
           <p>
             vibes.art (this site): <a href="https://github.com/remnynt/vibes-www" target="_blank" rel="noopener noreferrer">vibes-www</a>
+          </p>
+        </div>
+
+        <div className={aboutStyles.about_item}>
+          <h3>vibes is randomly generated on chain</h3>
+          <p>
+            at the time of mint, each vibe is assigned a blockhash from within the most recent 256 ethereum blocks, offset by token id. the entropy from that hash is combined with the token id and attribute names to evenly distribute randomness on each trait and to maximize the possibility space of outcomes.
+          </p>
+          <p>
+            the vibes contract discourages miners and sophisticated attackers from gaming the random number generation by making it unviable economically. the block rewards miners would have to forgo to guarantee a very rare outcome far exceeds any guaranteed returns. in addition, the mint function checks that the minting wallet address is not a smart contract, which forces attackers to redeploy any attacking contract with every mint attempt, incurring a higher cost of attack, with no guarantee of returns.
           </p>
         </div>
 
