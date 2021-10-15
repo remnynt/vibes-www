@@ -42,16 +42,21 @@ export default function Home({ elementsData }) {
             </a>
           </li>
           <li key="1" className={utilStyles.quickLinksListItem}>
+            <a href="https://zora.co/collections/0x6c7c97caff156473f6c9836522ae6e1d6448abe7" target="_blank" rel="noopener noreferrer">
+              zora
+            </a>
+          </li>
+          <li key="2" className={utilStyles.quickLinksListItem}>
             <a href="https://twitter.com/vibesdotart" target="_blank" rel="noopener noreferrer">
               twitter
             </a>
           </li>
-          <li key="2" className={utilStyles.quickLinksListItem}>
+          <li key="3" className={utilStyles.quickLinksListItem}>
             <a href="https://etherscan.io/address/0x6c7c97caff156473f6c9836522ae6e1d6448abe7" target="_blank" rel="noopener noreferrer">
               contract
             </a>
           </li>
-          <li key="3" className={utilStyles.quickLinksListItem}>
+          <li key="4" className={utilStyles.quickLinksListItem}>
             <Link href="/mint">
               <a>mint</a>
             </Link>
