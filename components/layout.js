@@ -18,6 +18,7 @@ export default function Layout({ children, home }) {
   const links = [
     { text: "home", link: "/" },
     { text: "about", link: "/about" },
+    { text: "render", link: "/render" },
     { text: "mint", link: "/mint" }
   ];
 

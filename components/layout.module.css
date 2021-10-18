@@ -39,12 +39,13 @@
 .footer {
   max-width: 42rem;
   margin: 0px auto;
-  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   -webkit-box-pack: justify;
   align-items: center;
   padding-top: 0rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .backToHome {
@@ -61,7 +62,7 @@
 .cc0 {
   display: flex;
   justify-content: right;
-  padding-top: 2rem;
+  padding-top: 0rem;
   padding-right: 1rem;
 }
 

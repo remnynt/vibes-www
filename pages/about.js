@@ -73,7 +73,7 @@ export default function About() {
         <div className={aboutStyles.about_item}>
           <h3>when vibes?</h3>
           <p>
-            vibes will be available to mint starting 10/15/21 at 5pm pdt.
+            vibes is now available to mint, since 10/15/21 at 5pm pdt.
           </p>
         </div>
 
@@ -99,16 +99,6 @@ export default function About() {
         </div>
 
         <div className={aboutStyles.about_item}>
-          <h3>vibes is art with no roadmap</h3>
-          <p>
-            vibes aims to bring generative art to a broarder nft collector audience by having a larger supply cap (7,777) and smaller mint price (0.07).
-          </p>
-          <p>
-            there are possible futures in which subsequent projects feature vibes derivatives or collaborations, but the most likely outcome is a new project exploring on chain generative 3d art (webgl) or on chain games.
-          </p>
-        </div>
-
-        <div className={aboutStyles.about_item}>
           <h3>vibes is free and open</h3>
           <p>
             vibes is dedicated to the public domain. to the extent possible under law, remnynt has waived all copyright and related or neighboring rights to this collection of art.
@@ -121,6 +111,17 @@ export default function About() {
           </p>
           <p>
             vibes.art (this site): <a href="https://github.com/remnynt/vibes-www" target="_blank" rel="noopener noreferrer">vibes-www</a>
+          </p>
+        </div>
+
+        <div className={aboutStyles.about_item}>
+          <h3>vibes is for everyone</h3>
+          <p>
+            vibes aims to bring generative art to a broarder nft collector audience by having a larger supply cap (7,777) and smaller mint price (0.07).
+          </p>
+          <p>
+            the collection was designed to support a broad range of outcomes, including some especially rare traits with a{" "}
+            <a href="https://twitter.com/vibesdotart/status/1449515033629704199" target="_blank" rel="noopener noreferrer">1 / 1000 chance</a>.
           </p>
         </div>
 

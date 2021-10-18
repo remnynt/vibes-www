@@ -24,43 +24,11 @@
   margin: 1rem 0;
 }
 
-.headingXl {
-  font-size: 2rem;
-  line-height: 1.3;
-  font-weight: 800;
-  letter-spacing: -0.05rem;
-  margin: 1rem 0;
-}
-
-.headingLg {
-  font-size: 1.6rem;
-  line-height: 1.4;
-  letter-spacing: 0.1rem;
-  margin: 1rem 0;
-}
-
-.headingMd {
-  font-size: 1.2rem;
-  line-height: 1.5;
-  text-align: center;
-}
-
 .headingSub {
   font-size: 1.2rem;
   line-height: 1;
   text-align: center;
   color: #999
-}
-
-.headingSubsub {
-  font-size: 0.95rem;
-  line-height: 0.5;
-  text-align: center;
-  color: #666
-}
-
-.borderCircle {
-  border-radius: 9999px;
 }
 
 .roundedImgTop {
@@ -69,31 +37,6 @@
   -moz-transition: opacity 1s ease-in-out;
   -o-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
-}
-
-.roundedImgBottom {
-  border-radius: 10px;
-  -webkit-transition: opacity 1s ease-in-out;
-  -moz-transition: opacity 1s ease-in-out;
-  -o-transition: opacity 1s ease-in-out;
-  transition: opacity 1s ease-in-out;
-}
-
-.roundedImgTransparent {
-  opacity: 0;
-  border-radius: 10px;
-  -webkit-transition: opacity 1s ease-in-out;
-  -moz-transition: opacity 1s ease-in-out;
-  -o-transition: opacity 1s ease-in-out;
-  transition: opacity 1s ease-in-out;
-}
-
-.colorInherit {
-  color: inherit;
-}
-
-.padding1px {
-  padding-top: 1px;
 }
 
 .list {
@@ -108,8 +51,4 @@
 .listItem {
   padding: 0 5px;
   margin: 5px;
-}
-
-.lightText {
-  color: #666;
 }

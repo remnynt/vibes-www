@@ -68,10 +68,6 @@ export default function Home({ elementsData }) {
         <p>generative art forged immutably on the ethereum blockchain</p>
       </section>
 
-      <section className={utilStyles.headingSubsub}>
-        <p>find your vibe: 10/15/21 5pm pdt</p>
-      </section>
-
       <section className={utilStyles.list}>
         <div className="grid">
           {elementsData.map(({ elementName, imagesList, featuredImageID }) => (
