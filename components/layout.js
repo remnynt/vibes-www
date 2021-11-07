@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useRouter } from "next/router";
 
 import styles from '/components/layout.module.css'
-import utilStyles from '/styles/utils.module.css'
 
 export const siteTitle = 'vibes'
 
@@ -55,7 +54,17 @@ export default function Layout({ children, home }) {
       </div>
 
       <header className={styles.header}>
-        <h1 className={utilStyles.heading2Xl}>{siteTitle}</h1>
+        <a href="/">
+          <Image
+            priority
+            loader={localLoader}
+            loading="eager"
+            src="images/logo.png"
+            width="160px"
+            height="60px"
+            alt="vibes"
+          />
+        </a>
       </header>
 
       <main>{children}</main>

@@ -12,6 +12,12 @@
   display: inline-block;
 }
 
+.about_item h4 {
+  color: #BBB;
+  font-size: 0.9rem;
+  margin: 0rem 0rem 0rem 0rem;
+}
+
 .about_item p {
   color: #999;
   font-size: 1.1rem;
@@ -24,4 +30,5 @@
 .about_table {
   color: #BBB;
   font-size: 0.9rem;
+  margin: 12px 0px;
 }
