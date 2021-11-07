@@ -15,23 +15,39 @@ export async function getStaticProps() {
 }
 
 const localLoader = ({ src, width, quality }) => {
-  return `./${src}?w=${width}&q=${quality || 75}`
-}
+  return `./${src}?w=${width}&q=${quality || 100}`
+};
+
+const shuffleArray = (a) => {
+  var length = a.length;
+  var copy = a.slice();
+  while (length) {
+    var index = Math.floor(Math.random() * length--);
+    var temp = copy[length];
+    copy[length] = copy[index];
+    copy[index] = temp;
+  }
+  return copy;
+};
 
 export default function Home({ elementsData }) {
+  elementsData = shuffleArray(elementsData);
+
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
         <link rel="icon" href="/favicon.ico" />
 
-        {elementsData.map(({ elementName, imagesList, featuredImageID }) => {
-          return imagesList.map((imageID) => {
-            return (
-              <link rel="preload" href={`/images/elements/${elementName}/${imageID}.png`} as="image"></link>
-            )
+        {
+          elementsData.map(({ elementName, imagesList, featuredImageID }) => {
+            return imagesList.map((imageID) => {
+              return (
+                <link rel="preload" href={`/images/elements/${elementName}/${imageID}.png`} as="image"></link>
+              )
+            })
           })
-        })}
+        }
       </Head>
 
       <section className={utilStyles.quickLinks}>
@@ -79,19 +95,6 @@ export default function Home({ elementsData }) {
                 src={`/images/elements/${elementName}/${featuredImageID}.png`}
                 height={"400%"}
                 width={"400%"}
-                onClick={function (evt) {
-                  const currentTarget = evt.currentTarget;
-                  const currentImageID = featuredImageID;
-                  let index = +featuredImageID + 1;
-                  if (index >= imagesList.length) {
-                    index = 1;
-                  }
-
-                  featuredImageID = '' + index;
-
-                  const newSrcset = currentTarget.srcset.replace(currentImageID + '.png', featuredImageID + '.png');
-                  currentTarget.srcset = newSrcset;
-                }}
               />
               <h3>element: {elementName}</h3>
             </div>

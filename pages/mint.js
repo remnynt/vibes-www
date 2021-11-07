@@ -4,746 +4,106 @@ import mintStyles from '/styles/mint.module.css';
 import utilStyles from '/styles/utils.module.css';
 import React, { useState, useEffect } from 'react';
 
+import {
+  WEB3_PROVIDER,
+  CONTRACT_ADDRESS_VIBES,
+  CONTRACT_ADDRESS_OPEN_VIBES,
+  ABI_VIBES,
+  ABI_OPEN_VIBES
+} from '/lib/contracts';
+
 const Web3 = require('web3');
-const CONTRACT_ADDRESS = "0x6c7C97CaFf156473F6C9836522AE6e1d6448Abe7";
-const ABI = [
-  {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "approved",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "Approval",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "operator",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "approved",
-        "type": "bool"
-      }
-    ],
-    "name": "ApprovalForAll",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "OwnershipTransferred",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "Transfer",
-    "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "MINT_COST",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "approve",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getApproved",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lookupIndex",
-        "type": "uint256"
-      }
-    ],
-    "name": "getColorByIndex",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "operator",
-        "type": "address"
-      }
-    ],
-    "name": "isApprovedForAll",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "mintCount",
-        "type": "uint256"
-      }
-    ],
-    "name": "mintVibes",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "mintingActive",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "name",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "ownerOf",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "reserveCount",
-        "type": "uint256"
-      }
-    ],
-    "name": "reserveVibes",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
-    ],
-    "name": "royaltyInfo",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "receiver",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "royaltyAmount",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "safeTransferFrom",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bytes",
-        "name": "_data",
-        "type": "bytes"
-      }
-    ],
-    "name": "safeTransferFrom",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "operator",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "approved",
-        "type": "bool"
-      }
-    ],
-    "name": "setApprovalForAll",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "uri",
-        "type": "string"
-      }
-    ],
-    "name": "setVibeURI",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes4",
-        "name": "interfaceId",
-        "type": "bytes4"
-      }
-    ],
-    "name": "supportsInterface",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "symbol",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "toggleAnimation",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "toggleOnChainAnimation",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenByIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenOfOwnerByIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenScript",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "tokenURI",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferFrom",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "useAnimation",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "useOnChainAnimation",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "vibeCheck",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-];
 
 export default function Mint() {
   let [web3, setWeb3] = useState(null);
   let [address, setAddress] = useState(null);
-  let [contract, setContract] = useState(null);
-  let [totalSupply, setTotalSupply] = useState(0);
+  let [contractVibes, setContractVibes] = useState(null);
+  let [contractOpenVibes, setContractOpenVibes] = useState(null);
+  let [totalSupplyVibes, setTotalSupplyVibes] = useState(0);
+  let [totalSupplyOpenVibes, setTotalSupplyOpenVibes] = useState(0);
+  let [mintingActiveVibes, setMintingActiveVibes] = useState(false);
+  let [mintingActiveOpenVibes, setMintingActiveOpenVibes] = useState(false);
 
-  totalSupply = totalSupply || 77;
+  totalSupplyVibes = totalSupplyVibes || 77;
+  totalSupplyOpenVibes = totalSupplyOpenVibes || 1;
 
   useEffect(() => {
     if (window.ethereum) {
-      let w3 = new Web3(ethereum);
-      connect(w3);
+      web3 = new Web3(ethereum);
     } else {
-      let w3 = new Web3(new Web3.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/242a1298e03444be849f048318ba3a9a"));
-      connect(w3);
+      web3 = new Web3(new Web3.providers.WebsocketProvider(WEB3_PROVIDER));
     }
 
-    Array.from(document.getElementsByTagName("iframe"))
-      .forEach((iframe) => {
-        iframe.width = 604;
-        iframe.height = 850;
-        render({
-          preventDefault: function () {},
-          target: { tokenId: { value: 1 } }
-        })
-      });
+    setWeb3(web3);
+    loadContract(ABI_VIBES, CONTRACT_ADDRESS_VIBES, setContractVibes, setTotalSupplyVibes, setMintingActiveVibes);
+    loadContract(ABI_OPEN_VIBES, CONTRACT_ADDRESS_OPEN_VIBES, setContractOpenVibes, setTotalSupplyOpenVibes, setMintingActiveOpenVibes);
   }, []);
 
-  function connect(w3) {
-    setWeb3(w3);
+  function loadContract (abi, address, setContract, setTotalSupply, setMintingActive) {
+    const contract = new web3.eth.Contract(abi, address);
+    setContract(contract);
 
-    let c = new w3.eth.Contract(ABI, CONTRACT_ADDRESS);
-    setContract(c);
+    contract.methods.totalSupply().call()
+      .then(supply => setTotalSupply(supply))
+      .catch(err => console.log(err));
 
-    c.methods.totalSupply().call()
-      .then((_supply) => {
-        setTotalSupply(_supply);
-      })
-      .catch((err) => console.log(err));
+    contract.methods.mintingActive().call()
+      .then(mintingActive => setMintingActive(mintingActive))
+      .catch(err => console.log(err));
   };
 
-  function render(event) {
-    event.preventDefault();
+  function mint (count, eth, contract, contractAddress) {
+    let ethTotal = count * eth;
+    let price = web3.utils.toWei("" + ethTotal);
+    let encoded;
 
-    let tokenId = event.target.tokenId.value;
-    if (contract) {
-      contract.methods.tokenScript(tokenId).call()
-        .then((tokenScript) => {
-          Array.from(document.getElementsByTagName("iframe"))
-            .forEach((iframe) => {
-              iframe.src = `https://vibesdotart.mypinata.cloud/ipfs/QmNzoYqL1i2JVe5XKMmn3A2V2WgH2fVWvcAWQaidbZ6p1U/${tokenId}.html`;
-              iframe.srcdoc = tokenScript;
-            });
-        })
-        .catch((err) => console.log(err));
+    if (count) {
+      encoded = contract.methods.mintVibes(count).encodeABI();
     } else {
-      Array.from(document.getElementsByTagName("iframe"))
-        .forEach((iframe) => {
-          iframe.src = `https://vibesdotart.mypinata.cloud/ipfs/QmNzoYqL1i2JVe5XKMmn3A2V2WgH2fVWvcAWQaidbZ6p1U/${tokenId}.html`;
-        });
+      encoded = contract.methods.mintVibes().encodeABI();
     }
-  };
 
-  function mint(event) {
-    event.preventDefault();
-
-    var _mint = function() {
-      let count = event.target.count.value;
-      let ethTotal = count * 0.07;
-      let price = web3.utils.toWei("" + ethTotal);
-      let encoded = contract.methods.mintVibes(count).encodeABI();
-
-      let tx = {
-        from: address,
-        to: CONTRACT_ADDRESS,
-        data: encoded,
-        nonce: 0,
-        value: web3.utils.numberToHex(price)
-      };
-
-      ethereum.request({ method: 'eth_sendTransaction', params: [tx] })
-        .then((hash) => {
-          setTimeout(() => { alert("success! tx hash: " + hash); }, 500);
-        })
-        .catch((err) => { alert("\n~ minting @ vibes.art ~\n\nerror:\n" + err.message); });
+    let tx = {
+      from: address,
+      to: contractAddress,
+      data: encoded,
+      nonce: 0,
+      value: web3.utils.numberToHex(price)
     };
 
+    ethereum.request({ method: 'eth_sendTransaction', params: [tx] })
+      .then((hash) => {
+        setTimeout(() => { alert("success! tx hash: " + hash); }, 500);
+      })
+      .catch((err) => { alert("\n~ minting @ vibes.art ~\n\nerror:\n" + err.message); });
+  };
+
+  function mintVibes (event) {
+    event.preventDefault();
+    var count = event.target.count.value || 1;
+    prepareMint(() => mint(count, 0.07, contractVibes, CONTRACT_ADDRESS_VIBES));
+  };
+
+  function mintOpenVibes (event) {
+    event.preventDefault();
+    prepareMint(() => mint(0, 0, contractOpenVibes, CONTRACT_ADDRESS_OPEN_VIBES));
+  };
+
+  function prepareMint (doMint) {
     if (address) {
-      _mint();
+      doMint();
     } else if (window.ethereum) {
       ethereum.request({ method: "eth_requestAccounts" })
         .then((accounts) => {
           address = accounts[0];
           setAddress(address);
-          _mint();
+          doMint();
         })
         .catch((err) => console.log(err));
     } else {
       alert("\n~ minting @ vibes.art ~\n\nno web3 wallet detected.\nplease install metamask.");
     }
-  }
+  };
 
   return (
     <Layout>
@@ -758,12 +118,20 @@ export default function Mint() {
 
       <div className={mintStyles.mint}>
         <div className={mintStyles.mint_item}>
-          <h3>remaining vibes</h3>
-          <p>{7777 - totalSupply} / 7777</p>
-          <h3>mint vibes</h3>
-          <form onSubmit={mint} className={mintStyles.mint_form}>
+          <h3>vibes</h3>
+          {
+            mintingActiveVibes
+              ? <h4enabled>[minting open]</h4enabled>
+              : <h4disabled>[minting soon]</h4disabled>
+          }
+          <ul>
+            <li key="1">remaining: {7777 - totalSupplyVibes} / 7777</li>
+            <li key="2">bonus: 1 signed physical print</li>
+            <li key="3">price: 0.07Ξ + gas</li>
+          </ul>
+          <form onSubmit={mintVibes} className={mintStyles.mint_form}>
             <p>
-              <label htmlFor="count">mint count (1 - 7):</label>
+              <label htmlFor="count">mint count: (1 - 7)</label>
             </p>
             <p>
               <input id="count" name="count" type="number" min="1" max="7" defaultValue="1" required />
@@ -772,23 +140,37 @@ export default function Mint() {
               <button type="submit">mint</button>
             </p>
           </form>
+        </div>
+
+        <div className={mintStyles.mint_item}>
+          <h3>open vibes</h3>
+          {
+            mintingActiveOpenVibes
+              ? <h4enabled>[minting open]</h4enabled>
+              : <h4disabled>[minting soon]</h4disabled>
+          }
+          <ul>
+            <li key="1">remaining: {2222 - totalSupplyOpenVibes} / 2222</li>
+            <li key="2">limit: 1 per wallet</li>
+            <li key="3">price: free + gas</li>
+          </ul>
+          <form onSubmit={mintOpenVibes} className={mintStyles.mint_form}>
+            <p>
+              <label>mint count: 1</label>
+            </p>
+            <p>
+              <button type="submit">mint</button>
+            </p>
+          </form>
+        </div>
+
+        <div className={mintStyles.mint_item}>
           <h3>notes</h3>
           <p>
-            mint price is 0.07Ξ + gas.
-          </p>
-          <p>
-            if there is an error with the mint transaction, metamask may display max gas fees. this is an indicator that your transaction will fail, and you may need more funds in your wallet.
-          </p>
-          <p>
-            this page was tested with the metamask chrome plugin and the metamask mobile app browser.
-          </p>
-          <p>
-            you can also mint directly from the contract on{" "}
-            <a href="https://etherscan.io/address/0x6c7c97caff156473f6c9836522ae6e1d6448abe7#writeContract" target="_blank" rel="noopener noreferrer">
-              etherscan
-            </a>.
+            if there is an error with the mint transaction, metamask may display max gas fees. this is an indicator that your transaction will fail, and you may need more funds in your wallet. this page was tested with the metamask chrome plugin and the metamask mobile app browser.
           </p>
         </div>
+
       </div>
     </Layout>
   )

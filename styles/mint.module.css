@@ -8,17 +8,44 @@
 .mint_item h3 {
   color: #E9E9E9;
   font-size: 1.3rem;
-  margin: 1rem 0rem 0rem 0rem;
-  display: inline-block;
+  margin: 3rem 0rem 0rem 0rem;
+}
+
+.mint_item h4enabled {
+  color: #66E966;
+  font-size: 0.9rem;
+  margin: 0rem 0rem 0rem 0rem;
+}
+
+.mint_item h4disabled {
+  color: #E96666;
+  font-size: 0.9rem;
+  margin: 0rem 0rem 0rem 0rem;
 }
 
 .mint_item p {
   color: #999;
   font-size: 1.1rem;
-  margin: 12px 0px;
+  margin: 4px 0px;
 }
 .mint_item p:nth-of-type(1) {
   margin-top: 10px;
+}
+
+.mint_item li {
+  color: #999;
+  font-size: 1.1rem;
+  margin: 4px 0px;
+}
+.mint_item li:nth-of-type(1) {
+  margin-top: 10px;
+}
+
+.mint_item u {
+  color: #BBB;
+  font-size: 1.1rem;
+  margin: 4px 0px;
+  text-underline-offset: 0.12rem;
 }
 
 .mint_form {
@@ -27,6 +54,9 @@
   justify-content: space-between;
   align-items: baseline;
   max-width: 15rem;
+}
+.mint_form p:nth-of-type(1) {
+  margin-top: 0px;
 }
 
 .render_form {
