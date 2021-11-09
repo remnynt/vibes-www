@@ -59,14 +59,6 @@
   margin-top: 0px;
 }
 
-.render_form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-  max-width: 19rem;
-}
-
-.iframe {
-  background: #E9E9E9;
+.mint_form button {
+  color: #000;
 }
