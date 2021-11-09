@@ -29,6 +29,10 @@
   max-width: 27rem;
 }
 
+.render_form button {
+  color: #000;
+}
+
 .iframe {
   background: #E9E9E9;
 }

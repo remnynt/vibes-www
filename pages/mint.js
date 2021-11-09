@@ -53,6 +53,10 @@ export default function Mint() {
   };
 
   function mint (count, eth, contract, contractAddress) {
+    if (contractAddress === CONTRACT_ADDRESS_VIBES) {
+      count = Math.max(1, Math.min(7, count));
+    }
+
     let ethTotal = count * eth;
     let price = web3.utils.toWei("" + ethTotal);
     let encoded;
@@ -71,11 +75,21 @@ export default function Mint() {
       value: web3.utils.numberToHex(price)
     };
 
-    ethereum.request({ method: 'eth_sendTransaction', params: [tx] })
-      .then((hash) => {
-        setTimeout(() => { alert("success! tx hash: " + hash); }, 500);
-      })
-      .catch((err) => { alert("\n~ minting @ vibes.art ~\n\nerror:\n" + err.message); });
+    let cb = function (error, result) {
+      if (!error) {
+        ethereum.request({ method: 'eth_sendTransaction', params: [tx] })
+          .then(hash => setTimeout(() => alert("success! tx hash: " + hash), 500))
+          .catch(e => alertError(e));
+      } else {
+        alertError(error);
+      }
+    };
+
+    if (count) {
+      contract.methods.mintVibes(count).estimateGas(tx, cb);
+    } else {
+      contract.methods.mintVibes().estimateGas(tx, cb);
+    }
   };
 
   function mintVibes (event) {
@@ -101,8 +115,20 @@ export default function Mint() {
         })
         .catch((err) => console.log(err));
     } else {
-      alert("\n~ minting @ vibes.art ~\n\nno web3 wallet detected.\nplease install metamask.");
+      alert("error:\nno web3 wallet detected.\nplease install metamask.");
     }
+  };
+
+  function alertError (error) {
+    var message = error.message || '';
+    if (message.indexOf("User denied") >= 0) {
+      message = "you rejected the transaction in your wallet app or plugin."
+    } else {
+      var index = message.indexOf('\n');
+      message = message.substring(0, index);
+    }
+
+    alert("error:\n" + message);
   };
 
   return (
@@ -120,9 +146,11 @@ export default function Mint() {
         <div className={mintStyles.mint_item}>
           <h3>vibes</h3>
           {
-            mintingActiveVibes
-              ? <h4enabled>[minting open]</h4enabled>
-              : <h4disabled>[minting soon]</h4disabled>
+            totalSupplyVibes === 7777
+              ? <h4disabled>[sold out]</h4disabled>
+              : mintingActiveVibes
+                ? <h4enabled>[minting open]</h4enabled>
+                : <h4disabled>[minting soon]</h4disabled>
           }
           <ul>
             <li key="1">remaining: {7777 - totalSupplyVibes} / 7777</li>
@@ -145,9 +173,11 @@ export default function Mint() {
         <div className={mintStyles.mint_item}>
           <h3>open vibes</h3>
           {
-            mintingActiveOpenVibes
-              ? <h4enabled>[minting open]</h4enabled>
-              : <h4disabled>[minting soon]</h4disabled>
+            totalSupplyOpenVibes === 2222
+              ? <h4disabled>[sold out]</h4disabled>
+              : mintingActiveOpenVibes
+                ? <h4enabled>[minting open]</h4enabled>
+                : <h4disabled>[minting soon]</h4disabled>
           }
           <ul>
             <li key="1">remaining: {2222 - totalSupplyOpenVibes} / 2222</li>
