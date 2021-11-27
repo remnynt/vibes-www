@@ -12,6 +12,15 @@
   display: inline-block;
 }
 
+.render_item li {
+  color: #999;
+  font-size: 1.1rem;
+  margin: 4px 0px;
+}
+.render_item li:nth-of-type(1) {
+  margin-top: 10px;
+}
+
 .render_item p {
   color: #999;
   font-size: 1.1rem;
@@ -26,7 +35,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  max-width: 27rem;
+  max-width: 12rem;
 }
 
 .render_form button {

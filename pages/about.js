@@ -153,6 +153,12 @@ export default function About() {
               twitter
             </a>.
           </p>
+          <p>
+            join the{" "}
+            <a href="https://discord.gg/DjhEVKnKW6" target="_blank" rel="noopener noreferrer">
+              discord
+            </a> to chat about on-chain art, tech, and future projects!
+          </p>
         </div>
       </div>
 
