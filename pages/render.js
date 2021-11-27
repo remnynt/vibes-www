@@ -96,25 +96,28 @@ export default function Render() {
 
       <div className={renderStyles.render}>
         <div className={renderStyles.render_item}>
-          <h3>render vibes at any size</h3>
+          <h3>render any vibe at any size</h3>
           <p>
-            you can use this page to render any token that's been minted. it may take time before your vibe is rendered on marketplaces. this script is pulled directly from the blockchain, so it's the quickest way to reveal your mints and get any image size and quality you want. if your token is not in the valid range, try refreshing the page.
+            this page renders any vibe from on-chain data, using the <a href="https://etherscan.io/address/0x6c7c97caff156473f6c9836522ae6e1d6448abe7#code#L1579" target="_blank" rel="noopener noreferrer">tokenScript</a> method of the vibes contracts.
           </p>
           <p>
-            the initial image that appears will be slightly jagged. to see the full high quality image, click the render button with downsample enabled. this may take a few minutes - look for the green loading bar. once the render is complete, feel free to right-click-save.
+            the initial image is a quick preview. for a high quality render, use the built-in controls below the art. this may take a few minutes. once complete, right-click-save.
           </p>
           <p>
-            using a desktop computer is recommended. loading a new token to render does not work inside the metamask mobile app browser.
+            use a desktop computer for best results. drag your browser tab to the side to avoid pausing the render.
           </p>
-          <p>
-            vibes tokenIds range from 1 to 7777.
-          </p>
-          <p>
-            open vibes tokenIds range from 7778 to 9999.
-          </p>
+        </div>
+
+        <div className={renderStyles.render_item}>
+          <h3>enter your vibe number</h3>
+          <ul>
+            <li key="1">[genesis] vibes #1 - #{totalSupplyVibes}</li>
+            <li key="2">[open] vibes #7778 - #{7777 + +totalSupplyOpenVibes}</li>
+          </ul>
+
           <form onSubmit={render} className={renderStyles.render_form}>
             <p>
-              <label htmlFor="tokenId">tokenId (1 - {totalSupplyVibes}) or (7778 - {7777 + +totalSupplyOpenVibes}):</label>
+              <label htmlFor="tokenId">vibe #:</label>
             </p>
             <p>
               <input id="tokenId" name="tokenId" type="number" min="1" max="9999" defaultValue="1" required />
@@ -123,10 +126,24 @@ export default function Render() {
               <button type="submit">load token</button>
             </p>
           </form>
+        </div>
 
-          <div>
-            <iframe className={renderStyles.iframe}></iframe>
-          </div>
+        <div>
+          <iframe className={renderStyles.iframe}></iframe>
+        </div>
+
+        <div className={renderStyles.render_item}>
+          <h3>recommended sizes</h3>
+          <p>
+            use the largest dimension when trying to fit a rectangle.
+          </p>
+          <ul>
+            <li key="1">default: 600px</li>
+            <li key="2">twitter banner: 1500px</li>
+            <li key="3">opensea banner: 3600px</li>
+            <li key="4">desktop / phone bg: match screen resolution</li>
+            <li key="5">physical print: 3000px & add 300px border (12" @ 300 dpi)</li>
+          </ul>
         </div>
       </div>
     </Layout>
